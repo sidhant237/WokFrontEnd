@@ -29,9 +29,8 @@ export class StockEntryComponent implements OnInit {
         this.stockData = result;
         this.itemsData = result.Items;
         this.itemsData.forEach( item => {
-          item.qty = 0;
+          item.qty = null;
         });
-        console.log(this.itemsData);
       }, error => {
         console.log(error);
       }
@@ -42,17 +41,16 @@ export class StockEntryComponent implements OnInit {
   stockUpdateHandler() {
     this.updatingStock = true;
     const updatedStock = {};
-    const employeeID = this.stockData.Employees.filter( item => item.Employee === this.employee)[0].ID;
-    updatedStock['outlet'] = this.stockData.Outlets.filter( item => item.Outlet === this.outlet)[0].ID;
-    updatedStock['date'] = this.date;
+    updatedStock['outlet'] = this.outlet;
     updatedStock['items'] = [];
-    this.itemsData.forEach(
+    this.itemsData.filter(item => item.qty !== null).forEach(
       item => {
         updatedStock['items'].push(
           {
             'id': item.ID,
             'qty': item.qty,
-            'employee': employeeID
+            'employee': this.employee,
+            'date': this.date
           }
         );
       }

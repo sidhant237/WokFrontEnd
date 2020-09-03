@@ -12,13 +12,15 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { StockEntryComponent } from './stock-entry/stock-entry.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { BillEntryComponent } from './bill-entry/bill-entry.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     StockEntryComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    BillEntryComponent
   ],
   imports: [
     BrowserModule,

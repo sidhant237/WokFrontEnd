@@ -3,32 +3,23 @@
     <div class="stock-entry-wrap mat-elevation-z8">
         <div class="stock-entry-controller">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <label for="date">Date</label>
                     <input class="form-control" id="date" type="date" [(ngModel)]="date">
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <label for="outlet">Outlet</label>
-                    <div class="search-input">
-                        <input class="form-control" id="outlet" type="text" list="outlet-list" [(ngModel)]="outlet" placeholder="Select Outlet">
-                        <datalist id="outlet-list">
-                            <option *ngFor="let outlets of stockData.Outlets" [value]="outlets.Outlet"></option>
-                        </datalist>
-                    </div>
+                    <select class="form-control" id="outlet" [(ngModel)]="outlet">
+                        <option [value]="undefined">Select Outlet</option>
+                        <option *ngFor="let outlets of stockData.Outlets" [value]="outlets.ID">{{ outlets.Outlet }}</option>
+                    </select>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <label for="employee">Employee</label>
-                    <div class="search-input">
-                        <input class="form-control" id="employee" type="text" list="employee-list" [(ngModel)]="employee" placeholder="Select Employee">
-                        <datalist id="employee-list">
-                            <option *ngFor="let employees of stockData.Employees" [value]="employees.Employee"></option>
-                        </datalist>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock" [disabled]="(outlet === undefined) || (employee === undefined) ">Update Stock</button>
+                    <select class="form-control" id="employee" [(ngModel)]="employee">
+                        <option [value]="undefined">Select Employee</option>
+                        <option *ngFor="let employees of stockData.Employees" [value]="employees.ID">{{ employees.Employee }}</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -37,6 +28,7 @@
             <table class="table" *ngIf="!updatingStock">
                 <thead class="thead-dark">
                   <tr>
+                    <th scope="col"></th>
                     <th scope="col">Item</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Quantity</th>
@@ -44,12 +36,16 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of itemsData">
-                      <th scope="col">{{ item.Item }}</th>
-                      <th scope="col">{{ item.Unit }}</th>
-                      <th scope="col"><input class="form-control" type="number" [id]="item.ID" [(ngModel)]="item.qty"></th>
+                    <th scope="col" class="cell"></th>
+                      <th scope="col" class="cell">{{ item.Item }}</th>
+                      <th scope="col" class="cell">{{ item.Unit }}</th>
+                      <th scope="col" class="cell"><input class="form-control" type="number" [id]="item.ID" [(ngModel)]="item.qty"></th>
                   </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="btn-wrap">
+            <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock" [disabled]="(outlet === undefined) || (employee === undefined) ">Update Stock</button>
         </div>
     </div>
 </div>
