@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock">Update Stock</button>
+                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock" [disabled]="(outlet === undefined) || (employee === undefined) ">Update Stock</button>
                 </div>
             </div>
         </div>

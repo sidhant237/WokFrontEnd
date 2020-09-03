@@ -62,6 +62,7 @@ export class StockEntryComponent implements OnInit {
         this.updatingStock = false;
         console.log(result);
       }, error => {
+        this.updatingStock = false;
         console.log(error);
       }
     );
