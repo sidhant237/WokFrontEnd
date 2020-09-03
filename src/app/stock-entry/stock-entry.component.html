@@ -1,1 +1,55 @@
-<p>stock-entry works!</p>
+<div class="container">
+    <h1 class="title">Stock Entry</h1>
+    <div class="stock-entry-wrap mat-elevation-z8">
+        <div class="stock-entry-controller">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="date">Date</label>
+                    <input class="form-control" id="date" type="date" [(ngModel)]="date">
+                </div>
+                <div class="col-lg-6">
+                    <label for="outlet">Outlet</label>
+                    <div class="search-input">
+                        <input class="form-control" id="outlet" type="text" list="outlet-list" [(ngModel)]="outlet" placeholder="Select Outlet">
+                        <datalist id="outlet-list">
+                            <option *ngFor="let outlets of stockData.Outlets" [value]="outlets.Outlet"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="employee">Employee</label>
+                    <div class="search-input">
+                        <input class="form-control" id="employee" type="text" list="employee-list" [(ngModel)]="employee" placeholder="Select Employee">
+                        <datalist id="employee-list">
+                            <option *ngFor="let employees of stockData.Employees" [value]="employees.Employee"></option>
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock">Update Stock</button>
+                </div>
+            </div>
+        </div>
+        <div class="stock-entry-content">
+            <app-spinner *ngIf="updatingStock"></app-spinner>
+            <table class="table" *ngIf="!updatingStock">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of itemsData">
+                      <th scope="col">{{ item.Item }}</th>
+                      <th scope="col">{{ item.Unit }}</th>
+                      <th scope="col"><input class="form-control" type="number" [id]="item.ID" [(ngModel)]="item.qty"></th>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

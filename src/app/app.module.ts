@@ -11,12 +11,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { StockEntryComponent } from './stock-entry/stock-entry.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    StockEntryComponent
+    StockEntryComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
