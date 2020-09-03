@@ -1,1 +1,89 @@
-<p>bill-entry works!</p>
+<div class="container">
+    <h1 class="title">Bill Entry</h1>
+    <div class="stock-entry-wrap mat-elevation-z8">
+        <div class="stock-entry-controller">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="date">Date</label>
+                    <input class="form-control" id="date" type="date" [(ngModel)]="date">
+                </div>
+                <div class="col-lg-6">
+                    <label for="outlet">Outlet</label>
+                    <select class="form-control" id="outlet" [(ngModel)]="outlet">
+                        <option [value]="undefined">Select Outlet</option>
+                        <option *ngFor="let outlets of itemsData.Outlets" [value]="outlets.ID">{{ outlets.Outlet }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="employee">Employee</label>
+                    <select class="form-control" id="employee" [(ngModel)]="employee">
+                        <option [value]="undefined">Select Employee</option>
+                        <option *ngFor="let employees of itemsData.Employees" [value]="employees.ID">{{ employees.Employee }}</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="supplier">Supplier</label>
+                    <select class="form-control" id="supplier" >
+                        <option [value]="undefined">Select Supplier</option>
+                        <option *ngFor="let supplier of itemsData.Suppliers" [value]="supplier.ID">{{ supplier.Supplier }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="stock-entry-content">
+            <app-spinner *ngIf="updatingStock"></app-spinner>
+            <table class="table" *ngIf="!updatingStock">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of billData; let i=index">
+                        <th scope="col">{{ i+1 }}</th>
+                        <th scope="col">
+                            <input class="form-control" list="item-list" placeholder="Select Item" [(ngModel)]="data.itemName">
+                            <datalist id="item-list">
+                                <option *ngFor="let item of itemsData.Items" [value]="item.Item">
+                            </datalist>
+                        </th>
+                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" ></th>
+                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.rate" ></th>
+                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.amount" ></th>
+                        <th scope="col">
+                            <button type="button" class="close" aria-label="Close" (click)="billItemRemoveHandler(i)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th scope="col">
+                            <button class="btn btn-sm btn-primary" (click)="billItemInsertHandler()">+</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="stock-entry-controller">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="supplier">Payment</label>
+                    <select class="form-control" id="payment" [(ngModel)]="payment">
+                        <option [value]="undefined">Select Payment</option>
+                        <option *ngFor="let payment of itemsData.PayTerms" [value]="payment.ID">{{ payment.PayTerms }}</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock" [disabled]="(outlet === undefined) || (employee === undefined) ">Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
