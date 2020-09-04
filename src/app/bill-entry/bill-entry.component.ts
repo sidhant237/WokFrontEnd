@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 import { environment } from './../../environments/environment';
 
@@ -15,6 +20,7 @@ export class BillEntryComponent implements OnInit {
   employee: string;
   supplier: string;
   payment: string;
+  billNumber: string;
   totalAmount: number;
 
   itemsData: any;
@@ -22,7 +28,11 @@ export class BillEntryComponent implements OnInit {
 
   updatingBill = false;
 
-  constructor(private http: HttpClient) { }
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
@@ -42,6 +52,7 @@ export class BillEntryComponent implements OnInit {
     const billStatement = {};
     billStatement['outlet'] = this.outlet;
     billStatement['total'] = this.totalAmount;
+    billStatement['bill_number'] = this.billNumber;
     billStatement['items'] = [];
     this.billData.forEach(
       item => {
@@ -61,10 +72,11 @@ export class BillEntryComponent implements OnInit {
     this.http.post(environment.url + 'billentry', billStatement).subscribe(
       result => {
         this.updatingBill = false;
-        console.log(result);
+        this.openSnackBar('Bill Generated Successfully', 'success');
       }, error => {
         this.updatingBill = false;
         console.log(error);
+        this.openSnackBar(error.error.msg, 'error');
       }
     );
   }
@@ -89,6 +101,15 @@ export class BillEntryComponent implements OnInit {
     this.totalAmount = 0;
     this.billData.forEach( item => {
       this.totalAmount += item.amount;
+    });
+  }
+
+  openSnackBar(msg, status) {
+    this._snackBar.open(msg, status, {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: [status]
     });
   }
 

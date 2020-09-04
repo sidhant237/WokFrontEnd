@@ -31,6 +31,12 @@
                     </select>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="bill-number">Bill Number</label>
+                    <input class="form-control" id="bill-number" placeholder="Enter Bill number" [(ngModel)]="billNumber">
+                </div>
+            </div>
         </div>
         <div class="stock-entry-content">
             <app-spinner *ngIf="updatingBill"></app-spinner>
