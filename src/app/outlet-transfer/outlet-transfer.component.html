@@ -71,7 +71,7 @@
             </table>
         </div>
         <div class="transfer-controller">
-            <button class="btn btn-success update-button" (click)="stockTransferHandler()" *ngIf="!transferingStock" [disabled]="(fromOutlet === undefined) || (toOutlet === undefined) || (employee === undefined) || (fromOutlet === toOutlet) ">Bill</button>
+            <button class="btn btn-success update-button" (click)="stockTransferHandler()" *ngIf="!transferingStock" [disabled]="(fromOutlet === undefined) || (toOutlet === undefined) || (employee === undefined) || (fromOutlet === toOutlet) ">Transfer Stock</button>
         </div>
     </div>
     <div class="alert" *ngIf="alertActive">
