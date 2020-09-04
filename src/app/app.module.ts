@@ -13,6 +13,7 @@ import {MatListModule} from '@angular/material/list';
 import { StockEntryComponent } from './stock-entry/stock-entry.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
+import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BillEntryComponent } from './bill-entry/bill-entry.component';
     AppComponent,
     StockEntryComponent,
     SpinnerComponent,
-    BillEntryComponent
+    BillEntryComponent,
+    OutletTransferComponent
   ],
   imports: [
     BrowserModule,
