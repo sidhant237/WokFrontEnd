@@ -41,8 +41,6 @@ export class BillEntryComponent implements OnInit {
     this.updatingBill = true;
     const billStatement = {};
     billStatement['outlet'] = this.outlet;
-    billStatement['supplier'] = this.supplier;
-    billStatement['payment'] = this.payment;
     billStatement['total'] = this.totalAmount;
     billStatement['items'] = [];
     this.billData.forEach(
@@ -51,10 +49,11 @@ export class BillEntryComponent implements OnInit {
           {
             'item': this.itemsData.Items.filter(data => data.Item === item.itemName)[0].ID,
             'qty': item.qty,
-            'rate': item.rate,
             'amount': item.amount,
             'employee': this.employee,
-            'date': this.date
+            'date': this.date,
+            'supplier' : this.supplier,
+            'payment' : this.payment
           }
         );
       }
