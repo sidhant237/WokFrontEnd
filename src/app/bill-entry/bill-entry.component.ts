@@ -15,16 +15,18 @@ export class BillEntryComponent implements OnInit {
   employee: string;
   supplier: string;
   payment: string;
+  totalAmount: number;
 
   itemsData: any;
   billData: any = [];
 
-  updatingStock = false;
+  updatingBill = false;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
+    this.totalAmount = 0;
     this.http.get(environment.url + 'billentry').subscribe(
       (result: StockData) => {
         this.itemsData = result;
@@ -35,29 +37,34 @@ export class BillEntryComponent implements OnInit {
   }
 
 
-  stockUpdateHandler() {
-    this.updatingStock = true;
-    const updatedStock = {};
-    updatedStock['outlet'] = this.outlet;
-    updatedStock['items'] = [];
-    this.itemsData.filter(item => item.qty !== null).forEach(
+  billEntryHandler() {
+    this.updatingBill = true;
+    const billStatement = {};
+    billStatement['outlet'] = this.outlet;
+    billStatement['supplier'] = this.supplier;
+    billStatement['payment'] = this.payment;
+    billStatement['total'] = this.totalAmount;
+    billStatement['items'] = [];
+    this.billData.forEach(
       item => {
-        updatedStock['items'].push(
+        billStatement['items'].push(
           {
-            'id': item.ID,
+            'item': this.itemsData.Items.filter(data => data.Item === item.itemName)[0].ID,
             'qty': item.qty,
+            'rate': item.rate,
+            'amount': item.amount,
             'employee': this.employee,
             'date': this.date
           }
         );
       }
     );
-    this.http.post(environment.url + 'billentry', updatedStock).subscribe(
+    this.http.post(environment.url + 'billentry', billStatement).subscribe(
       result => {
-        this.updatingStock = false;
+        this.updatingBill = false;
         console.log(result);
       }, error => {
-        this.updatingStock = false;
+        this.updatingBill = false;
         console.log(error);
       }
     );
@@ -66,15 +73,24 @@ export class BillEntryComponent implements OnInit {
   billItemInsertHandler() {
     this.billData.push({
       'itemName': '',
-      'qty': 0,
-      'rate': 0,
+      'qty': null,
+      'rate': null,
       'amount': 0
     });
   }
 
   billItemRemoveHandler(index) {
     this.billData.splice(index, 1);
-    console.log(this.billData);
+  }
+
+  billCalculatorHandler(index) {
+    if (this.billData[index].qty && this.billData[index].rate) {
+      this.billData[index].amount = this.billData[index].qty * this.billData[index].rate;
+    }
+    this.totalAmount = 0;
+    this.billData.forEach( item => {
+      this.totalAmount += item.amount;
+    });
   }
 
 }

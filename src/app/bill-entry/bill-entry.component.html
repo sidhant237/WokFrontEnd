@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label for="supplier">Supplier</label>
-                    <select class="form-control" id="supplier" >
+                    <select class="form-control" id="supplier" [(ngModel)]="supplier">
                         <option [value]="undefined">Select Supplier</option>
                         <option *ngFor="let supplier of itemsData.Suppliers" [value]="supplier.ID">{{ supplier.Supplier }}</option>
                     </select>
@@ -33,8 +33,8 @@
             </div>
         </div>
         <div class="stock-entry-content">
-            <app-spinner *ngIf="updatingStock"></app-spinner>
-            <table class="table" *ngIf="!updatingStock">
+            <app-spinner *ngIf="updatingBill"></app-spinner>
+            <table class="table" *ngIf="!updatingBill">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col"></th>
@@ -54,9 +54,9 @@
                                 <option *ngFor="let item of itemsData.Items" [value]="item.Item">
                             </datalist>
                         </th>
-                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" ></th>
-                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.rate" ></th>
-                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.amount" ></th>
+                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" (keyup)="billCalculatorHandler(i)"></th>
+                        <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.rate" (keyup)="billCalculatorHandler(i)"></th>
+                        <th scope="col">{{ data.amount }}</th>
                         <th scope="col">
                             <button type="button" class="close" aria-label="Close" (click)="billItemRemoveHandler(i)">
                                 <span aria-hidden="true">&times;</span>
@@ -65,8 +65,12 @@
                     </tr>
                     <tr >
                         <th scope="col">
-                            <button class="btn btn-sm btn-primary" (click)="billItemInsertHandler()">+</button>
+                            <button class="btn btn-sm btn-primary" style="border-radius: 50%;" (click)="billItemInsertHandler()">+</button>
                         </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">Grand Total</th>
+                        <th scope="col">{{ totalAmount }}</th>
                     </tr>
                 </tbody>
             </table>
@@ -81,7 +85,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <button class="btn btn-success update-button" (click)="stockUpdateHandler()" *ngIf="!updatingStock" [disabled]="(outlet === undefined) || (employee === undefined) ">Bill</button>
+                    <button class="btn btn-success update-button" (click)="billEntryHandler()" *ngIf="!updatingBill" [disabled]="(outlet === undefined) || (employee === undefined) || (supplier === undefined) || (payment === undefined) || (totalAmount === 0)">Bill</button>
                 </div>
             </div>
         </div>
