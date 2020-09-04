@@ -15,6 +15,7 @@ import { StockEntryComponent } from './stock-entry/stock-entry.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
 import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.compo
     StockEntryComponent,
     SpinnerComponent,
     BillEntryComponent,
-    OutletTransferComponent
+    OutletTransferComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

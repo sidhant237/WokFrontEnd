@@ -91,9 +91,12 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <button class="btn btn-success update-button" (click)="billEntryHandler()" *ngIf="!updatingBill" [disabled]="(outlet === undefined) || (employee === undefined) || (supplier === undefined) || (payment === undefined) || (totalAmount === 0)">Bill</button>
+                    <button class="btn btn-success update-button" (click)="billEntryHandler()" *ngIf="!updatingBill" [disabled]="(outlet === undefined) || (employee === undefined) || (supplier === undefined) || (payment === undefined) || (totalAmount === 0) || (billNumber === undefined)">Bill</button>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="alert" *ngIf="alertActive">
+        <app-alert [msg]="alertMsg" [status]="alertStatus"></app-alert>
     </div>
 </div>

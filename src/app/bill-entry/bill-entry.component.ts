@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
 
 import { environment } from './../../environments/environment';
 
@@ -28,11 +23,12 @@ export class BillEntryComponent implements OnInit {
 
   updatingBill = false;
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  alertActive = false;
+  alertMsg: string = '';
+  alertStatus: string = '';
 
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
@@ -52,7 +48,7 @@ export class BillEntryComponent implements OnInit {
     const billStatement = {};
     billStatement['outlet'] = this.outlet;
     billStatement['total'] = this.totalAmount;
-    billStatement['bill_number'] = this.billNumber;
+    billStatement['payment'] = this.payment;
     billStatement['items'] = [];
     this.billData.forEach(
       item => {
@@ -64,7 +60,8 @@ export class BillEntryComponent implements OnInit {
             'employee': this.employee,
             'date': this.date,
             'supplier' : this.supplier,
-            'payment' : this.payment
+            'payment' : this.payment,
+            'bill_number' : this.billNumber
           }
         );
       }
@@ -72,11 +69,11 @@ export class BillEntryComponent implements OnInit {
     this.http.post(environment.url + 'billentry', billStatement).subscribe(
       result => {
         this.updatingBill = false;
-        this.openSnackBar('Bill Generated Successfully', 'success');
+        this.alertGenerateHandler('Bill Generated Successfully', 'success');
       }, error => {
         this.updatingBill = false;
         console.log(error);
-        this.openSnackBar(error.error.msg, 'error');
+        this.alertGenerateHandler('something went wrong', 'error');
       }
     );
   }
@@ -92,25 +89,30 @@ export class BillEntryComponent implements OnInit {
 
   billItemRemoveHandler(index) {
     this.billData.splice(index, 1);
+    this.findGrandTotalHandler();
   }
 
   billCalculatorHandler(index) {
     if (this.billData[index].qty && this.billData[index].rate) {
       this.billData[index].amount = this.billData[index].qty * this.billData[index].rate;
     }
+    this.findGrandTotalHandler();
+  }
+
+  findGrandTotalHandler() {
     this.totalAmount = 0;
     this.billData.forEach( item => {
       this.totalAmount += item.amount;
     });
   }
 
-  openSnackBar(msg, status) {
-    this._snackBar.open(msg, status, {
-      duration: 2000,
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      panelClass: [status]
-    });
+  alertGenerateHandler(message, status) {
+    this.alertMsg = message;
+    this.alertStatus = status;
+    this.alertActive = true;
+    setTimeout(() => {
+      this.alertActive = false;
+    }, 5000);
   }
 
 }

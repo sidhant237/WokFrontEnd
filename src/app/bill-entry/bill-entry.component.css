@@ -84,12 +84,8 @@ select {
     margin: 0 !important;
 }
 
-.success {
-    background-color: rgba(0, 225, 0, 0.5) !important;
-    color: white !important;
-}
-
-.error {
-    background-color: rgba(225, 0, 0, 0.5) !important;
-    color: white !important;
+.alert {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
 }
