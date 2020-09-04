@@ -1,0 +1,97 @@
+.container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.stock-entry-wrap {
+    width: 85%;
+}
+
+.stock-entry-controller, 
+.stock-entry-content {
+    margin: 40px;
+}
+
+.stock-entry-content {
+    display: flex;
+    justify-content: center;
+}
+
+.stock-entry-controller .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-entry-controller .row .col-lg-6 {
+    max-width: 350px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input,
+select {
+    max-width: 200px;
+}
+
+.btn-wrap {
+    margin: 40px;
+    padding-bottom: 20px;
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group {
+    min-width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    border-radius: 0;
+    min-width: 30%;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    margin-top: 30px;
+    width: 90%;
+}
+
+.cell {
+    padding: 0px !important;
+    vertical-align: middle;
+}
+
+.cell input,
+.cell section {
+    margin: 0 !important;
+}
+
+.alert {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+.transfer-controller {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
