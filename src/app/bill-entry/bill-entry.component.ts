@@ -49,6 +49,7 @@ export class BillEntryComponent implements OnInit {
     billStatement['outlet'] = this.outlet;
     billStatement['total'] = this.totalAmount;
     billStatement['payment'] = this.payment;
+    billStatement['supplier'] = this.supplier;
     billStatement['items'] = [];
     this.billData.forEach(
       item => {
