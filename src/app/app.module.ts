@@ -16,6 +16,10 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
 import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.component';
 import { AlertComponent } from './shared/alert/alert.component';
+import { OrderItemComponent } from './order-item/order-item.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -25,7 +29,8 @@ import { AlertComponent } from './shared/alert/alert.component';
     SpinnerComponent,
     BillEntryComponent,
     OutletTransferComponent,
-    AlertComponent
+    AlertComponent,
+    OrderItemComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,10 @@ import { AlertComponent } from './shared/alert/alert.component';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

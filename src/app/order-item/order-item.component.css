@@ -1,0 +1,114 @@
+.container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.stock-entry-wrap {
+    width: 100%;
+}
+
+.stock-entry-controller, 
+.stock-entry-content {
+    margin: 10px 40px;
+}
+
+.stock-entry-controller .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-entry-controller .row .col-lg-6 {
+    max-width: 500px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input,
+select {
+   max-width: 400px;
+}
+
+.btn-wrap {
+    margin: 40px;
+    padding-bottom: 20px;
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group {
+    min-width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    border-radius: 0;
+    min-width: 30%;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    margin-top: 30px;
+    width: 90%;
+}
+
+.cell {
+    padding: 0px !important;
+    vertical-align: middle;
+}
+
+.cell input,
+.cell section {
+    margin: 0 !important;
+}
+
+.alert {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+.stock-entry-content {
+    min-height: 65vh;
+}
+
+.stock-entry-content .col-lg-6 {
+    padding: 0px;
+    margin: 2px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    min-height: 65vh;
+    max-width: 38.5vw;
+}
+
+.col-header {
+    text-align: center;
+    width: inherit;
+    border-bottom: 1px solid gray;
+    margin: none;
+}
+
+.col-header h1 {
+    margin: 5px 1px;
+}
+
+.col-content {
+    padding: 5px 15px;
+}

@@ -1,0 +1,53 @@
+<div class="container">
+    <h1 class="title">Order</h1>
+    <div class="stock-entry-wrap mat-elevation-z8">
+        <div class="stock-entry-controller">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="date">Date</label>
+                    <input class="form-control" id="date" type="date" [(ngModel)]="date">
+                </div>
+                <div class="col-lg-6">
+                    <label for="outlet">Outlet</label>
+                    <select class="form-control" id="outlet" [(ngModel)]="outlet">
+                        <option [value]="undefined">Select Outlet</option>
+                        <option *ngFor="let outlet of menuData.outlet" [value]="outlet.outletid">{{ outlet.outletname }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="stock-entry-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="col-header">
+                        <h1>Items</h1>
+                    </div>
+                    <div class="col-content">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    category
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    this is category 1
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>I'm visible because I am open</p>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let menu of menuData.menu; let i=index" [value]="menu.itemid" (click)="addItemToOrder(i)">
+                          {{menu.itemname}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert" *ngIf="alertActive">
+        <app-alert [msg]="alertMsg" [status]="alertStatus"></app-alert>
+    </div>
+</div>
+
