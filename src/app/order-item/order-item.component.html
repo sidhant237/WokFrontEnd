@@ -18,30 +18,80 @@
         </div>
         <div class="stock-entry-content">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="col-header">
-                        <h1>Items</h1>
+                        <h2>Items</h2>
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width">
+                              <input type="text"
+                                     placeholder="Search Item"
+                                     aria-label="Number"
+                                     matInput
+                                     [formControl]="myControl"
+                                     [matAutocomplete]="auto" />
+                              <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let menu of filteredOptions | async; let i=index" [value]="menu.itemname" (click)="addItemToOrder(i)">
+                                  {{menu.itemname}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                        </form>
                     </div>
                     <div class="col-content">
-                        <mat-expansion-panel>
+                        <mat-expansion-panel *ngFor="let category of categories">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    category
+                                    {{ category }}
                                 </mat-panel-title>
-                                <mat-panel-description>
-                                    this is category 1
-                                </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <p>I'm visible because I am open</p>
+                            <mat-selection-list [multiple]="false">
+                                <mat-list-option *ngFor="let item of categorisedData[category]; let i=index" (click)="addItemToOrderFromCatData(category, i)">
+                                    <div class="item-details">
+                                        <p>{{ item.itemname }}</p>
+                                        <p> &#8377; {{ item.price }}</p>
+                                    </div>
+                                </mat-list-option>
+                            </mat-selection-list>
                         </mat-expansion-panel>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let menu of menuData.menu; let i=index" [value]="menu.itemid" (click)="addItemToOrder(i)">
-                          {{menu.itemname}}
-                        </mat-option>
-                    </mat-autocomplete>
+                <div class="col-lg-7">
+                    <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of orderData; let i=index">
+                                <th scope="col">{{ data.itemname }}</th>
+                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" (keyup)="billCalculatorHandler(i)"></th>
+                                <th scope="col">&#8377; {{ data.price }}</th>
+                                <th scope="col">&#8377; {{ data.amount }}</th>
+                                <th scope="col">
+                                    <button mat-fab color="primary" aria-label="icon-delete" (click)="billItemRemoveHandler(i)" >
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr style="background-color: #343a40;color: white;">
+                                <th scope="col">Discount <input type="checkbox" name="discount" [(ngModel)]="discount.active" (click)="findGrandTotalHandler()"></th>
+                                <th scope="col">
+                                    <select class="form-control" [(ngModel)]="discount.discountname" *ngIf="discount.active">
+                                        <option [value]="null">Discount</option>
+                                        <option *ngFor="let item of menuData.discount" [value]="item.discountid">{{ item.discountname }}</option>
+                                    </select>
+                                </th>
+                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="discount.discountvalue" (keyup)="discountCalculateHandler()" *ngIf="discount.active"></th>
+                                <th scope="col"><p>{{ totalAmount }}</p></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

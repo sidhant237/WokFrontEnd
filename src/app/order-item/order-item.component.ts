@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { environment } from './../../environments/environment';
+
 
 @Component({
   selector: 'app-order-item',
@@ -16,13 +20,20 @@ export class OrderItemComponent implements OnInit {
   totalAmount: number;
 
   menuData: any;
+  categories: any;
+  categorisedData: any;
   orderData: any = [];
+  discount = {discuntId: null, discountname: null, active: false, discountvalue: 0};
 
   updatingBill = false;
 
   alertActive = false;
   alertMsg: string = '';
   alertStatus: string = '';
+
+  myControl = new FormControl();
+
+  filteredOptions: Observable<any[]>;
 
 
   constructor(private http: HttpClient) { }
@@ -33,10 +44,24 @@ export class OrderItemComponent implements OnInit {
     this.http.get(environment.url + 'order').subscribe(
       (result: StockData) => {
         this.menuData = result;
+        this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
+        this.categorisedData = this.groupDataByCategory();
+        console.log(this.categorisedData);
       }, error => {
         console.log(error);
       }
     );
+
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+  }
+
+  _filter(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.menuData.menu.filter(menu => menu.itemname.toLowerCase().includes(filterValue));
   }
 
 
@@ -86,8 +111,8 @@ export class OrderItemComponent implements OnInit {
   }
 
   billCalculatorHandler(index) {
-    if (this.orderData[index].qty && this.orderData[index].rate) {
-      this.orderData[index].amount = this.orderData[index].qty * this.orderData[index].rate;
+    if (this.orderData[index].qty > 0) {
+      this.orderData[index].amount = this.orderData[index].qty * this.orderData[index].price;
     }
     this.findGrandTotalHandler();
   }
@@ -109,7 +134,39 @@ export class OrderItemComponent implements OnInit {
   }
 
   addItemToOrder(index) {
-    console.log(index + ' item added');
+    if (this.orderData.filter(item => item.itemid === this.menuData.menu[index].itemid).length === 0) {
+      const item = { ...this.menuData.menu[index] };
+      item['qty'] = null;
+      item['amount'] = null;
+      this.orderData.push(item);
+    }
+  }
+
+  groupDataByCategory() {
+    return this.menuData.menu.reduce((acc, obj) => {
+      const key = obj['catname'];
+      if (!acc[key]) {
+         acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+   }, {});
+  }
+
+  addItemToOrderFromCatData(category, index) {
+    if (this.orderData.filter(item => item.itemid === this.categorisedData[category][index].itemid).length === 0) {
+      const item = { ...this.categorisedData[category][index] };
+      item['qty'] = null;
+      item['amount'] = null;
+      this.orderData.push(item);
+    }
+  }
+
+  discountCalculateHandler() {
+    this.findGrandTotalHandler();
+    if (this.discount.active && this.discount.discountvalue > 0) {
+      this.totalAmount -= (this.totalAmount * (this.discount.discountvalue / 100 ));
+    }
   }
 
 }

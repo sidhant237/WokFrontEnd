@@ -64,11 +64,6 @@ select {
     justify-content: center;
 }
 
-.table {
-    margin-top: 30px;
-    width: 90%;
-}
-
 .cell {
     padding: 0px !important;
     vertical-align: middle;
@@ -89,26 +84,89 @@ select {
     min-height: 65vh;
 }
 
-.stock-entry-content .col-lg-6 {
+.stock-entry-content .col-lg-5{
+    padding: 0px;
+    margin: 2px;
+    min-height: 65vh;
+    max-width: 38.5vw;
+}
+
+.stock-entry-content .col-lg-7 {
     padding: 0px;
     margin: 2px;
     border: 1px solid gray;
     border-radius: 5px;
     min-height: 65vh;
-    max-width: 38.5vw;
+    max-width: 44.6vw;
 }
 
 .col-header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: inherit;
-    border-bottom: 1px solid gray;
     margin: none;
+    padding: 1px 10px;
+    box-sizing: border-box;
 }
 
-.col-header h1 {
-    margin: 5px 1px;
+.col-header h2 {
+    margin-top: 10px;
+    font-weight: 900;
 }
 
 .col-content {
-    padding: 5px 15px;
+   overflow-y: scroll;
+   max-height: 55vh;
+}
+
+.col-content::-webkit-scrollbar {
+    width: 3px;
+}
+
+.col-content::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 5px;
+}
+
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-form-field {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    width: 250px;
+}
+
+.table {
+    width: 100%;
+    margin: none;
+}
+
+.table tbody th {
+    margin: 0px;
+    padding: 5px;
+}
+
+.table th button {
+    height: 30px;
+    width: 30px;
+}
+
+.mat-icon {
+    position: absolute;
+    top: 3px;
+    left: 3.1px;
+}
+
+.table input,
+.table select {
+    max-width: 90px;
+    padding: 0px;
+    max-height: 30px;
 }
