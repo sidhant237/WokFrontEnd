@@ -56,7 +56,10 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <table class="table">
+                    <div class="loader" *ngIf="updatingBill">
+                        <app-spinner></app-spinner>
+                    </div>
+                    <table class="table table-dark" *ngIf="orderData.length > 0 && !updatingBill">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Item</th>
@@ -69,7 +72,7 @@
                         <tbody>
                             <tr *ngFor="let data of orderData; let i=index">
                                 <th scope="col">{{ data.itemname }}</th>
-                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" (keyup)="billCalculatorHandler(i)"></th>
+                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" (change)="billCalculatorHandler(i)" (keyup)="billCalculatorHandler(i)"></th>
                                 <th scope="col">&#8377; {{ data.price }}</th>
                                 <th scope="col">&#8377; {{ data.amount }}</th>
                                 <th scope="col">
@@ -78,21 +81,52 @@
                                     </button>
                                 </th>
                             </tr>
-                            <tr style="background-color: #343a40;color: white;">
-                                <th scope="col">Discount <input type="checkbox" name="discount" [(ngModel)]="discount.active" (click)="findGrandTotalHandler()"></th>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Gross Amount</th>
+                                <th scope="col">&#8377; {{ grossAmount }}</th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Discount <input type="checkbox" name="discount" [(ngModel)]="discount.active" (click)="findGrossAmountHandler()"></th>
                                 <th scope="col">
                                     <select class="form-control" [(ngModel)]="discount.discountname" *ngIf="discount.active">
                                         <option [value]="null">Discount</option>
                                         <option *ngFor="let item of menuData.discount" [value]="item.discountid">{{ item.discountname }}</option>
                                     </select>
                                 </th>
-                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="discount.discountvalue" (keyup)="discountCalculateHandler()" *ngIf="discount.active"></th>
-                                <th scope="col"><p>{{ totalAmount }}</p></th>
+                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="discount.discountvalue" (keyup)="discountCalculateHandler()" (change)="discountCalculateHandler()" *ngIf="discount.active"></th>
+                                <th scope="col"><p>&#8377; {{ discountValue }}</p></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Taxable Amount</th>
+                                <th scope="col">{{ taxableAmount }}</th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">GST(5%)</th>
+                                <th scope="col">{{ gstAmount }}</th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Net Amount</th>
+                                <th scope="col">{{ totalAmount }}</th>
                                 <th scope="col"></th>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="order-submit">
+                <button class="btn btn-success" (click)="itemOrderHandler()" [disabled]="outlet === undefined || totalAmount === 0">Order</button>
             </div>
         </div>
     </div>

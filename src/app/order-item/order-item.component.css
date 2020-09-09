@@ -60,8 +60,10 @@ select {
 }
 
 .loader {
+    height: 55vh;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .cell {
@@ -115,7 +117,8 @@ select {
     font-weight: 900;
 }
 
-.col-content {
+.col-content,
+.col-lg-7 {
    overflow-y: scroll;
    max-height: 55vh;
 }
@@ -129,6 +132,9 @@ select {
     border-radius: 5px;
 }
 
+.col-lg-7::-webkit-scrollbar {
+    width: 0px;
+}
 
 .item-details {
     display: flex;
@@ -169,4 +175,11 @@ select {
     max-width: 90px;
     padding: 0px;
     max-height: 30px;
+}
+
+.order-submit {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

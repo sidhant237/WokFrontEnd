@@ -18,6 +18,10 @@ export class OrderItemComponent implements OnInit {
   outlet: string;
   orderNumber: string;
   totalAmount: number;
+  taxableAmount: number;
+  gstAmount: number;
+  discountValue = 0;
+  grossAmount: number;
 
   menuData: any;
   categories: any;
@@ -84,10 +88,10 @@ export class OrderItemComponent implements OnInit {
         );
       }
     );
-    this.http.post(environment.url + 'billentry', billStatement).subscribe(
+    this.http.post(environment.url + 'order', billStatement).subscribe(
       result => {
         this.updatingBill = false;
-        this.alertGenerateHandler('Bill Generated Successfully', 'success');
+        this.alertGenerateHandler('Order Successfull', 'success');
       }, error => {
         this.updatingBill = false;
         console.log(error);
@@ -107,21 +111,26 @@ export class OrderItemComponent implements OnInit {
 
   billItemRemoveHandler(index) {
     this.orderData.splice(index, 1);
-    this.findGrandTotalHandler();
+    this.findGrossAmountHandler();
   }
 
   billCalculatorHandler(index) {
-    if (this.orderData[index].qty > 0) {
-      this.orderData[index].amount = this.orderData[index].qty * this.orderData[index].price;
+    this.orderData[index].amount = this.orderData[index].qty * this.orderData[index].price;
+    if (this.discount.active) {
+      this.discountCalculateHandler();
+    } else  {
+      this.findGrossAmountHandler();
     }
-    this.findGrandTotalHandler();
   }
 
-  findGrandTotalHandler() {
-    this.totalAmount = 0;
+  findGrossAmountHandler() {
+    this.grossAmount = 0;
     this.orderData.forEach( item => {
-      this.totalAmount += item.amount;
+      this.grossAmount += item.amount;
     });
+    this.taxableAmount = this.grossAmount;
+    this.gstAmount = this.taxableAmount * 0.05;
+    this.totalAmount = this.taxableAmount + this.gstAmount;
   }
 
   alertGenerateHandler(message, status) {
@@ -163,10 +172,33 @@ export class OrderItemComponent implements OnInit {
   }
 
   discountCalculateHandler() {
-    this.findGrandTotalHandler();
+    this.findGrossAmountHandler();
     if (this.discount.active && this.discount.discountvalue > 0) {
-      this.totalAmount -= (this.totalAmount * (this.discount.discountvalue / 100 ));
+      this.discountValue = this.grossAmount * (this.discount.discountvalue / 100);
+      this.taxableAmount = this.grossAmount - this.discountValue;
+      this.gstAmount = this.taxableAmount * 0.05;
+      this.totalAmount = this.taxableAmount + this.gstAmount;
     }
+  }
+
+  itemOrderHandler() {
+    this.updatingBill = true;
+    const orderBillData = {
+      date: this.date,
+      outlet: this.outlet,
+      items: this.orderData,
+      discount: this.discount
+    };
+    this.http.post(environment.url + 'order', orderBillData).subscribe(
+      result => {
+        this.updatingBill = false;
+        this.alertGenerateHandler('Bill Generated Successfully', 'success');
+      }, error => {
+        this.updatingBill = false;
+        console.log(error);
+        this.alertGenerateHandler('something went wrong', 'error');
+      }
+    );
   }
 
 }
