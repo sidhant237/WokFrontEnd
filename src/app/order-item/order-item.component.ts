@@ -22,12 +22,15 @@ export class OrderItemComponent implements OnInit {
   gstAmount: number;
   discountValue = 0;
   grossAmount: number;
+  customDiscountIDCounter: number;
+  showDiscountTab = false;
 
   menuData: any;
   categories: any;
   categorisedData: any;
   orderData: any = [];
-  discount = {discuntId: null, discountname: null, active: false, discountvalue: 0};
+  customDiscount: any = [];
+  isDiscountApplied = false;
 
   updatingBill = false;
 
@@ -48,9 +51,12 @@ export class OrderItemComponent implements OnInit {
     this.http.get(environment.url + 'order').subscribe(
       (result: StockData) => {
         this.menuData = result;
+        this.customDiscountIDCounter = this.menuData.discount.length;
         this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
         this.categorisedData = this.groupDataByCategory();
-        console.log(this.categorisedData);
+        this.menuData.discount.forEach( item => {
+          item['value'] = null;
+        });
       }, error => {
         console.log(error);
       }
@@ -69,21 +75,48 @@ export class OrderItemComponent implements OnInit {
   }
 
 
-  billEntryHandler() {
+  itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
     billStatement['outlet'] = this.outlet;
-    billStatement['total'] = this.totalAmount;
-    billStatement['date'] =  this.date;
     billStatement['items'] = [];
+    billStatement['discount'] = [];
     this.orderData.forEach(
       item => {
         billStatement['items'].push(
           {
-            'item': this.menuData.Items.filter(data => data.Item === item.itemName)[0].ID,
+            'item': this.menuData.menu.filter(data => data.Item === item.itemName)[0].itemid,
             'qty': item.qty,
             'amount': item.amount,
             'date': this.date,
+          }
+        );
+      }
+    );
+    this.menuData.discount.forEach(
+      item => {
+        if (item.value) {
+          billStatement['discount'].push(
+            {
+              'item': item.discountid,
+              'discountname': item.discountname,
+              'qty': null,
+              'amount': item.value,
+              'date': this.date
+            }
+          );
+        }
+      }
+    );
+    this.customDiscount.forEach(
+      item => {
+        billStatement['discount'].push(
+          {
+            'item': item.id,
+            'discountname': item.discountName,
+            'qty': null,
+            'amount': item.value,
+            'date': this.date
           }
         );
       }
@@ -116,7 +149,7 @@ export class OrderItemComponent implements OnInit {
 
   billCalculatorHandler(index) {
     this.orderData[index].amount = this.orderData[index].qty * this.orderData[index].price;
-    if (this.discount.active) {
+    if (this.discountValue) {
       this.discountCalculateHandler();
     } else  {
       this.findGrossAmountHandler();
@@ -172,33 +205,33 @@ export class OrderItemComponent implements OnInit {
   }
 
   discountCalculateHandler() {
+    this.discountValue = 0;
     this.findGrossAmountHandler();
-    if (this.discount.active && this.discount.discountvalue > 0) {
-      this.discountValue = this.grossAmount * (this.discount.discountvalue / 100);
-      this.taxableAmount = this.grossAmount - this.discountValue;
-      this.gstAmount = this.taxableAmount * 0.05;
-      this.totalAmount = this.taxableAmount + this.gstAmount;
-    }
+    this.menuData.discount.forEach( item => { this.discountValue += item.value; });
+    this.customDiscount.forEach( item => { this.discountValue += item.value; });
+    this.taxableAmount = this.grossAmount - this.discountValue;
+    this.gstAmount = this.taxableAmount * 0.05;
+    this.totalAmount = this.taxableAmount + this.gstAmount;
   }
 
-  itemOrderHandler() {
-    this.updatingBill = true;
-    const orderBillData = {
-      date: this.date,
-      outlet: this.outlet,
-      items: this.orderData,
-      discount: this.discount
-    };
-    this.http.post(environment.url + 'order', orderBillData).subscribe(
-      result => {
-        this.updatingBill = false;
-        this.alertGenerateHandler('Bill Generated Successfully', 'success');
-      }, error => {
-        this.updatingBill = false;
-        console.log(error);
-        this.alertGenerateHandler('something went wrong', 'error');
-      }
-    );
+  addCustomDiscountHandler() {
+    this.customDiscount.push({
+      id: this.customDiscountIDCounter + 1,
+      discountName: null,
+      value: null
+    });
+  }
+
+  removeCustomDiscountHandler(index) {
+    this.customDiscount.splice(index, 1);
+    this.discountCalculateHandler();
+  }
+
+  resetDiscount() {
+    this.discountValue = 0;
+    this.customDiscount = [];
+    this.findGrossAmountHandler();
+    this.menuData.discount.forEach( item => { item.value = null; });
   }
 
 }

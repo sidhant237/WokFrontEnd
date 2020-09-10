@@ -59,7 +59,7 @@
                     <div class="loader" *ngIf="updatingBill">
                         <app-spinner></app-spinner>
                     </div>
-                    <table class="table table-dark" *ngIf="orderData.length > 0 && !updatingBill">
+                    <table class="table table-dark" *ngIf="orderData.length > 0 && !updatingBill && !showDiscountTab">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Item</th>
@@ -72,7 +72,9 @@
                         <tbody>
                             <tr *ngFor="let data of orderData; let i=index">
                                 <th scope="col">{{ data.itemname }}</th>
-                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="data.qty" (change)="billCalculatorHandler(i)" (keyup)="billCalculatorHandler(i)"></th>
+                                <th scope="col">
+                                    <input class="form-control" type="number" [(ngModel)]="data.qty" (change)="billCalculatorHandler(i)" (keyup)="billCalculatorHandler(i)">
+                                </th>
                                 <th scope="col">&#8377; {{ data.price }}</th>
                                 <th scope="col">&#8377; {{ data.amount }}</th>
                                 <th scope="col">
@@ -89,36 +91,38 @@
                                 <th scope="col"></th>
                             </tr>
                             <tr>
-                                <th scope="col">Discount <input type="checkbox" name="discount" [(ngModel)]="discount.active" (click)="findGrossAmountHandler()"></th>
-                                <th scope="col">
-                                    <select class="form-control" [(ngModel)]="discount.discountname" *ngIf="discount.active">
-                                        <option [value]="null">Discount</option>
-                                        <option *ngFor="let item of menuData.discount" [value]="item.discountid">{{ item.discountname }}</option>
-                                    </select>
-                                </th>
-                                <th scope="col"><input class="form-control" type="number" [(ngModel)]="discount.discountvalue" (keyup)="discountCalculateHandler()" (change)="discountCalculateHandler()" *ngIf="discount.active"></th>
-                                <th scope="col"><p>&#8377; {{ discountValue }}</p></th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="showDiscountTab = true">
+                                        Discount
+                                    </button></th>
+                                <th scope="col"><p>&#8377; {{ discountValue }}</p></th>
+                                <th scope="col">
+                                    <button mat-fab color="primary" aria-label="icon-delete" (click)="resetDiscount()">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </th>
                             </tr>
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col">Taxable Amount</th>
-                                <th scope="col">{{ taxableAmount }}</th>
+                                <th scope="col">&#8377; {{ taxableAmount }}</th>
                                 <th scope="col"></th>
                             </tr>
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col">GST(5%)</th>
-                                <th scope="col">{{ gstAmount }}</th>
+                                <th scope="col">&#8377; {{ gstAmount }}</th>
                                 <th scope="col"></th>
                             </tr>
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col">Net Amount</th>
-                                <th scope="col">{{ totalAmount }}</th>
+                                <th scope="col">&#8377; {{ totalAmount }}</th>
                                 <th scope="col"></th>
                             </tr>
                         </tbody>
@@ -134,4 +138,55 @@
         <app-alert [msg]="alertMsg" [status]="alertStatus"></app-alert>
     </div>
 </div>
+
+<div class="model" *ngIf="showDiscountTab">
+    <table class="table table-dark">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Discount Name</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of menuData.discount">
+                <th scope="col"></th>
+                <th scope="col">{{ item.discountname }}</th>
+                <th scope="col">
+                    <input class="form-control" type="number" placeholder="Amount" [(ngModel)]="item.value" 
+                            (keyup)="discountCalculateHandler()" (change)="discountCalculateHandler()" >
+                </th>
+            </tr>
+            <tr *ngFor="let item of customDiscount; let i = index">
+                <th scope="col">
+                    <button mat-fab color="primary" aria-label="icon-delete" (click)="removeCustomDiscountHandler(i)" >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </th>
+                <th scope="col">
+                    <input class="form-control" type="text" placeholder="Discount type" [(ngModel)]="item.discountName" >
+                </th>
+                <th scope="col">
+                    <input class="form-control" type="number" placeholder="Amount" [(ngModel)]="item.value" 
+                            (keyup)="discountCalculateHandler()" (change)="discountCalculateHandler()">
+                </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Total Discount</th>
+                <th> &#8377; {{ discountValue }}</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>
+                    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addCustomDiscountHandler()">
+                        <mat-icon>plus_one</mat-icon>
+                    </button>
+                </th>
+                <th><button class="btn btn-sm btn-danger" (click)="showDiscountTab = false">Close</button></th>
+            </tr>
+        </tbody>
+    </table>
+</div >
+<div class="backdrop" *ngIf="showDiscountTab" (click)="showDiscountTab = false"></div>
 
