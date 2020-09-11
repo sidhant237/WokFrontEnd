@@ -15,7 +15,6 @@ import { environment } from './../../environments/environment';
 export class OrderItemComponent implements OnInit {
 
   date: any;
-  outlet: string;
   orderNumber: string;
   totalAmount: number;
   taxableAmount: number;
@@ -30,6 +29,8 @@ export class OrderItemComponent implements OnInit {
   categorisedData: any;
   orderData: any = [];
   customDiscount: any = [];
+  discountData: any = [];
+  gstData: any = [];
   isDiscountApplied = false;
 
   updatingBill = false;
@@ -75,9 +76,7 @@ export class OrderItemComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
-    billStatement['outlet'] = this.outlet;
     billStatement['items'] = [];
-    billStatement['discount'] = [];
     this.orderData.forEach(
       item => {
         billStatement['items'].push(
@@ -92,13 +91,22 @@ export class OrderItemComponent implements OnInit {
     );
     this.customDiscount.forEach(
       item => {
-        billStatement['discount'].push(
+        billStatement['items'].push(
           {
             'item': item.discountid,
+            'qty': null,
             'amount': item.value,
             'date': this.date
           }
         );
+      }
+    );
+    billStatement['items'].push(
+      {
+        'item': this.categorisedData.GST[0].itemid,
+        'qty': null,
+        'amount': this.gstAmount,
+        'date': this.date
       }
     );
     this.http.post(environment.url + 'tollyorder', billStatement).subscribe(

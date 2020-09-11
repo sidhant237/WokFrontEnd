@@ -34,12 +34,33 @@
     align-items: center;
 }
 
+.outlet {
+    height: 76px;
+    box-sizing: border-box;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+}
+
 .stock-entry-controller .row .col-lg-2 {
     height: 76px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+}
+
+.stock-entry-controller .row .col-lg-5 h3 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0px;
+    padding: 4px 10px;
+    border: 1px solid #454d55;
+    border-radius: 5px;
+}
+
+.stock-entry-controller .row .col-lg-5 h3 span {
+    font-weight: bolder;
 }
 
 .stock-entry-controller .row .col-lg-2 h3 {
@@ -118,7 +139,7 @@ select {
     margin: 2px;
     border: 1px solid gray;
     border-radius: 5px;
-    min-height: 65vh;
+    min-height: 75vh;
     max-width: 44.6vw;
 }
 
@@ -140,7 +161,7 @@ select {
 .col-content,
 .col-lg-7 {
    overflow-y: scroll;
-   max-height: 55vh;
+   max-height: 65vh;
 }
 
 .col-content::-webkit-scrollbar {
@@ -167,6 +188,10 @@ select {
     padding: 0px;
     margin: 0px;
     width: 250px;
+}
+
+::ng-deep .mat-autocomplete-panel {
+    max-height: 350px !important;
 }
 
 .table {
