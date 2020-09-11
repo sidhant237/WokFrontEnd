@@ -25,12 +25,32 @@
     align-items: center;
 }
 
-.stock-entry-controller .row .col-lg-6 {
+.stock-entry-controller .row .col-lg-5 {
     max-width: 500px;
     padding: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.stock-entry-controller .row .col-lg-2 {
+    height: 76px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.stock-entry-controller .row .col-lg-2 h3 {
+    margin-bottom: 5px;
+    padding: 4px 10px;
+    border: 1px solid #454d55;
+    border-radius: 5px;
+}
+
+.stock-entry-controller .row .col-lg-2 h3 span {
+    font-weight: bolder;
 }
 
 input,
@@ -195,6 +215,10 @@ select {
     width: 400px;
 }
 
+.model .table th select {
+    max-width: 150px;
+}
+
 .backdrop {
     position: fixed;
     left: 0px;
@@ -209,3 +233,4 @@ select {
     width: 90px;
     text-align: center;
 }
+

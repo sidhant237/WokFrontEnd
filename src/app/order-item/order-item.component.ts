@@ -48,15 +48,12 @@ export class OrderItemComponent implements OnInit {
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
     this.totalAmount = 0;
-    this.http.get(environment.url + 'order').subscribe(
+    this.http.get(environment.url + 'tollyorder').subscribe(
       (result: StockData) => {
         this.menuData = result;
         this.customDiscountIDCounter = this.menuData.discount.length;
         this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
         this.categorisedData = this.groupDataByCategory();
-        this.menuData.discount.forEach( item => {
-          item['value'] = null;
-        });
       }, error => {
         console.log(error);
       }
@@ -93,35 +90,18 @@ export class OrderItemComponent implements OnInit {
         );
       }
     );
-    this.menuData.discount.forEach(
-      item => {
-        if (item.value) {
-          billStatement['discount'].push(
-            {
-              'item': item.discountid,
-              'discountname': item.discountname,
-              'qty': null,
-              'amount': item.value,
-              'date': this.date
-            }
-          );
-        }
-      }
-    );
     this.customDiscount.forEach(
       item => {
         billStatement['discount'].push(
           {
-            'item': item.id,
-            'discountname': item.discountName,
-            'qty': null,
+            'item': item.discountid,
             'amount': item.value,
             'date': this.date
           }
         );
       }
     );
-    this.http.post(environment.url + 'order', billStatement).subscribe(
+    this.http.post(environment.url + 'tollyorder', billStatement).subscribe(
       result => {
         this.updatingBill = false;
         this.alertGenerateHandler('Order Successfull', 'success');
@@ -144,7 +124,11 @@ export class OrderItemComponent implements OnInit {
 
   billItemRemoveHandler(index) {
     this.orderData.splice(index, 1);
-    this.findGrossAmountHandler();
+    if (this.discountValue) {
+      this.discountCalculateHandler();
+    } else  {
+      this.findGrossAmountHandler();
+    }
   }
 
   billCalculatorHandler(index) {
@@ -175,6 +159,7 @@ export class OrderItemComponent implements OnInit {
     }, 5000);
   }
 
+  // add item from search field
   addItemToOrder(index) {
     if (this.orderData.filter(item => item.itemid === this.menuData.menu[index].itemid).length === 0) {
       const item = { ...this.menuData.menu[index] };
@@ -195,6 +180,7 @@ export class OrderItemComponent implements OnInit {
    }, {});
   }
 
+  // add item from list
   addItemToOrderFromCatData(category, index) {
     if (this.orderData.filter(item => item.itemid === this.categorisedData[category][index].itemid).length === 0) {
       const item = { ...this.categorisedData[category][index] };
@@ -207,7 +193,6 @@ export class OrderItemComponent implements OnInit {
   discountCalculateHandler() {
     this.discountValue = 0;
     this.findGrossAmountHandler();
-    this.menuData.discount.forEach( item => { this.discountValue += item.value; });
     this.customDiscount.forEach( item => { this.discountValue += item.value; });
     this.taxableAmount = this.grossAmount - this.discountValue;
     this.gstAmount = this.taxableAmount * 0.05;
@@ -216,8 +201,7 @@ export class OrderItemComponent implements OnInit {
 
   addCustomDiscountHandler() {
     this.customDiscount.push({
-      id: this.customDiscountIDCounter + 1,
-      discountName: null,
+      discountid: null,
       value: null
     });
   }
@@ -231,7 +215,6 @@ export class OrderItemComponent implements OnInit {
     this.discountValue = 0;
     this.customDiscount = [];
     this.findGrossAmountHandler();
-    this.menuData.discount.forEach( item => { item.value = null; });
   }
 
 }
@@ -240,5 +223,6 @@ export interface StockData {
   menu: any;
   outlet: any;
   discount: any;
+  OrderNo: any;
 }
 

@@ -3,16 +3,19 @@
     <div class="stock-entry-wrap mat-elevation-z8">
         <div class="stock-entry-controller">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <label for="date">Date</label>
                     <input class="form-control" id="date" type="date" [(ngModel)]="date">
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <label for="outlet">Outlet</label>
                     <select class="form-control" id="outlet" [(ngModel)]="outlet">
                         <option [value]="undefined">Select Outlet</option>
                         <option *ngFor="let outlet of menuData.outlet" [value]="outlet.outletid">{{ outlet.outletname }}</option>
                     </select>
+                </div>
+                <div class="col-lg-2 bill-number">
+                    <h3>Bill No: <span>{{ menuData.OrderNo[0]['1'] }}</span></h3>
                 </div>
             </div>
         </div>
@@ -149,14 +152,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of menuData.discount">
-                <th scope="col"></th>
-                <th scope="col">{{ item.discountname }}</th>
-                <th scope="col">
-                    <input class="form-control" type="number" placeholder="Amount" [(ngModel)]="item.value" 
-                            (keyup)="discountCalculateHandler()" (change)="discountCalculateHandler()" >
-                </th>
-            </tr>
             <tr *ngFor="let item of customDiscount; let i = index">
                 <th scope="col">
                     <button mat-fab color="primary" aria-label="icon-delete" (click)="removeCustomDiscountHandler(i)" >
@@ -164,7 +159,10 @@
                     </button>
                 </th>
                 <th scope="col">
-                    <input class="form-control" type="text" placeholder="Discount type" [(ngModel)]="item.discountName" >
+                    <select class="form-control" [(ngModel)]="item.discountid">
+                        <option [value]="null">Select Discount</option>
+                        <option *ngFor="let discount of menuData.discount" [value]="discount.discountid" >{{ discount.discountname }}</option>
+                    </select>
                 </th>
                 <th scope="col">
                     <input class="form-control" type="number" placeholder="Amount" [(ngModel)]="item.value" 
