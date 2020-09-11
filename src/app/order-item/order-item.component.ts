@@ -76,12 +76,13 @@ export class OrderItemComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
+    billStatement['order_number'] = this.menuData.OrderNo[0]['1'];
     billStatement['items'] = [];
     this.orderData.forEach(
       item => {
         billStatement['items'].push(
           {
-            'item': this.menuData.menu.filter(data => data.Item === item.itemName)[0].itemid,
+            'item': item.itemid,
             'qty': item.qty,
             'amount': item.amount,
             'date': this.date,
@@ -123,7 +124,7 @@ export class OrderItemComponent implements OnInit {
 
   billItemInsertHandler() {
     this.orderData.push({
-      'itemName': '',
+      'itemName': null,
       'qty': null,
       'rate': null,
       'amount': 0
@@ -171,6 +172,7 @@ export class OrderItemComponent implements OnInit {
   addItemToOrder(index) {
     if (this.orderData.filter(item => item.itemid === this.menuData.menu[index].itemid).length === 0) {
       const item = { ...this.menuData.menu[index] };
+      console.log(item);
       item['qty'] = null;
       item['amount'] = null;
       this.orderData.push(item);
