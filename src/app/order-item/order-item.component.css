@@ -43,6 +43,7 @@
 }
 
 .stock-entry-controller .row .col-lg-2 {
+    padding-right: 0px;
     height: 76px;
     box-sizing: border-box;
     display: flex;
@@ -64,10 +65,12 @@
 }
 
 .stock-entry-controller .row .col-lg-2 h3 {
+    width: 100%;
     margin-bottom: 5px;
     padding: 4px 10px;
     border: 1px solid #454d55;
     border-radius: 5px;
+    text-align: center;
 }
 
 .stock-entry-controller .row .col-lg-2 h3 span {
@@ -187,11 +190,15 @@ select {
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
-    width: 250px;
+    width: 300px;
 }
 
 ::ng-deep .mat-autocomplete-panel {
     max-height: 350px !important;
+}
+
+::ng-deep .mat-option {
+    height: 25px !important;
 }
 
 .table {
