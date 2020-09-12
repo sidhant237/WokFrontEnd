@@ -108,7 +108,8 @@ export class OrderHazraComponent implements OnInit {
         'item': this.categorisedData.GST[0].itemid,
         'qty': null,
         'amount': this.gstAmount,
-        'date': this.date
+        'date': this.date,
+        'order_number': this.menuData.OrderNo[0]['1']
       }
     );
     this.http.post(environment.url + 'hazraorder', billStatement).subscribe(

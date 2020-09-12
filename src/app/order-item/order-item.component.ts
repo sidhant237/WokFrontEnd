@@ -76,7 +76,6 @@ export class OrderItemComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
-    billStatement['order_number'] = this.menuData.OrderNo[0]['1'];
     billStatement['items'] = [];
     this.orderData.forEach(
       item => {
@@ -86,6 +85,7 @@ export class OrderItemComponent implements OnInit {
             'qty': item.qty,
             'amount': item.amount,
             'date': this.date,
+            'order_number': this.menuData.OrderNo[0]['1']
           }
         );
       }
@@ -97,7 +97,8 @@ export class OrderItemComponent implements OnInit {
             'item': item.discountid,
             'qty': null,
             'amount': item.value,
-            'date': this.date
+            'date': this.date,
+            'order_number': this.menuData.OrderNo[0]['1']
           }
         );
       }
@@ -107,7 +108,8 @@ export class OrderItemComponent implements OnInit {
         'item': this.categorisedData.GST[0].itemid,
         'qty': null,
         'amount': this.gstAmount,
-        'date': this.date
+        'date': this.date,
+        'order_number': this.menuData.OrderNo[0]['1']
       }
     );
     this.http.post(environment.url + 'tollyorder', billStatement).subscribe(
