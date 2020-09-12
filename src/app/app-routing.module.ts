@@ -5,6 +5,7 @@ import { StockEntryComponent } from './stock-entry/stock-entry.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
 import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.component';
 import { OrderItemComponent } from './order-item/order-item.component';
+import { OrderHazraComponent } from './order-hazra/order-hazra.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'stock-entry', component: StockEntryComponent },
   { path: 'bill-entry', component: BillEntryComponent },
   { path: 'outlet-transfer', component: OutletTransferComponent },
-  { path: 'order', component: OrderItemComponent }
+  { path: 'hazra', component: OrderHazraComponent },
+  { path: 'tolly', component: OrderItemComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,268 @@
+.container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.stock-entry-wrap {
+    width: 100%;
+}
+
+.stock-entry-controller, 
+.stock-entry-content {
+    margin: 10px 40px;
+}
+
+.stock-entry-controller .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-entry-controller .row .col-lg-5 {
+    max-width: 500px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.outlet {
+    height: 76px;
+    box-sizing: border-box;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+}
+
+.stock-entry-controller .row .col-lg-2 {
+    padding-right: 0px;
+    height: 76px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.stock-entry-controller .row .col-lg-5 h3 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0px;
+    padding: 4px 10px;
+    border: 1px solid #454d55;
+    border-radius: 5px;
+}
+
+.stock-entry-controller .row .col-lg-5 h3 span {
+    font-weight: bolder;
+}
+
+.stock-entry-controller .row .col-lg-2 h3 {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 4px 10px;
+    border: 1px solid #454d55;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.stock-entry-controller .row .col-lg-2 h3 span {
+    font-weight: bolder;
+}
+
+input,
+select {
+   max-width: 400px;
+}
+
+.btn-wrap {
+    margin: 40px;
+    padding-bottom: 20px;
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group {
+    min-width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    border-radius: 0;
+    min-width: 30%;
+}
+
+.loader {
+    height: 55vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell {
+    padding: 0px !important;
+    vertical-align: middle;
+}
+
+.cell input,
+.cell section {
+    margin: 0 !important;
+}
+
+.alert {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+.stock-entry-content {
+    min-height: 65vh;
+}
+
+.stock-entry-content .col-lg-5{
+    padding: 0px;
+    margin: 2px;
+    min-height: 65vh;
+    max-width: 38.5vw;
+}
+
+.stock-entry-content .col-lg-7 {
+    padding: 0px;
+    margin: 2px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    min-height: 75vh;
+    max-width: 44.6vw;
+}
+
+.col-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: inherit;
+    margin: none;
+    padding: 1px 10px;
+    box-sizing: border-box;
+}
+
+.col-header h2 {
+    margin-top: 10px;
+    font-weight: 900;
+}
+
+.col-content,
+.col-lg-7 {
+   overflow-y: scroll;
+   max-height: 65vh;
+}
+
+.col-content::-webkit-scrollbar {
+    width: 3px;
+}
+
+.col-content::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.col-lg-7::-webkit-scrollbar {
+    width: 0px;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-form-field {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    width: 300px;
+}
+
+::ng-deep .mat-autocomplete-panel {
+    max-height: 350px !important;
+}
+
+::ng-deep .mat-option {
+    height: 25px !important;
+}
+
+.table {
+    width: 100%;
+    margin: none;
+}
+
+.table tbody th {
+    margin: 0px;
+    padding: 5px;
+}
+
+.table th button {
+    height: 30px;
+    width: 30px;
+}
+
+.mat-icon {
+    position: absolute;
+    top: 3px;
+    left: 3.1px;
+}
+
+.table input,
+.table select {
+    max-width: 90px;
+    padding: 0px;
+    max-height: 30px;
+}
+
+.order-submit {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.model {
+    top: 35%;
+    left: 55%;
+    position: fixed;
+    z-index: 100;
+}
+
+.model .table {
+    width: 400px;
+}
+
+.model .table th select {
+    max-width: 150px;
+}
+
+.backdrop {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 50;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.table th .btn {
+    width: 90px;
+    text-align: center;
+}
+

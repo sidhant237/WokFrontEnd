@@ -22,6 +22,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { OrderHazraComponent } from './order-hazra/order-hazra.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatButtonModule} from '@angular/material/button';
     BillEntryComponent,
     OutletTransferComponent,
     AlertComponent,
-    OrderItemComponent
+    OrderItemComponent,
+    OrderHazraComponent
   ],
   imports: [
     BrowserModule,
