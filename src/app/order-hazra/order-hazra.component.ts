@@ -95,7 +95,7 @@ export class OrderHazraComponent implements OnInit {
         billStatement['items'].push(
           {
             'item': item.discountid,
-            'qty': null,
+            'qty': 0,
             'amount': item.value,
             'date': this.date,
             'order_number': this.menuData.OrderNo[0]['1']
@@ -106,7 +106,7 @@ export class OrderHazraComponent implements OnInit {
     billStatement['items'].push(
       {
         'item': this.categorisedData.GST[0].itemid,
-        'qty': null,
+        'qty': 0,
         'amount': this.gstAmount,
         'date': this.date,
         'order_number': this.menuData.OrderNo[0]['1']
