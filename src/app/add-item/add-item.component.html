@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="title">Cash Transfer</h1>
+    <h1 class="title">Add Item</h1>
     <div class="stock-entry-wrap mat-elevation-z8">
         <div class="stock-entry-controller" *ngIf="updatingBill">
             <app-spinner></app-spinner>
@@ -10,17 +10,19 @@
             <input type="date" class="form-control" id="date" [(ngModel)]="date">
             </div>
             <div class="form-group">
-                <label for="employee">Employee</label>
-                <select id="employee" class="form-control" [(ngModel)]="employee">
+                <label for="employee">Table</label>
+                <select id="employee" class="form-control" [(ngModel)]="table">
                     <option [value]="undefined">Select Employee</option>
-                    <option *ngFor="let supplier of employeeData" [value]="supplier.EmpID">{{ supplier.EmpName }}</option>
+                    <option value="Discount">Discount</option>
+                    <option value="Supplier">Supplier</option>
+                    <option value="Employee">Employee</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="number" class="form-control" id="amount" placeholder="Amount" [(ngModel)]="amount">
+                <label for="amount">Name</label>
+                <input type="text" class="form-control" id="amount" placeholder="Amount" [(ngModel)]="name">
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="employee === undefined || amount === undefined" (click)="paymentEntryHandler()">Done</button>
+            <button type="submit" class="btn btn-success" [disabled]="table === undefined || name === undefined" (click)="paymentEntryHandler()">Done</button>
         </div>
     </div>
     <div class="alert" *ngIf="alertActive">
