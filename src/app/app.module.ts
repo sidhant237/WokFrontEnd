@@ -26,6 +26,7 @@ import { OrderHazraComponent } from './order-hazra/order-hazra.component';
 import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
 import { CashTransferComponent } from './cash-transfer/cash-transfer.component';
 import { AddItemComponent } from './add-item/add-item.component';
+import { AddMenuItemComponent } from './add-menu-item/add-menu-item.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddItemComponent } from './add-item/add-item.component';
     OrderHazraComponent,
     PaymentEntryComponent,
     CashTransferComponent,
-    AddItemComponent
+    AddItemComponent,
+    AddMenuItemComponent
   ],
   imports: [
     BrowserModule,

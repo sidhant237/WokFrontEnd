@@ -3,17 +3,19 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from './../../environments/environment';
 
-
 @Component({
-  selector: 'app-add-item',
-  templateUrl: './add-item.component.html',
-  styleUrls: ['./add-item.component.css']
+  selector: 'app-add-menu-item',
+  templateUrl: './add-menu-item.component.html',
+  styleUrls: ['./add-menu-item.component.css']
 })
-export class AddItemComponent implements OnInit {
+export class AddMenuItemComponent implements OnInit {
 
   date: any;
   name: string;
-  table: any;
+  category: any;
+  price: number;
+
+  categoryData: any;
 
   updatingBill = false;
 
@@ -25,6 +27,13 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
+    this.http.get(environment.url + 'addmitem').subscribe(
+      (result) => {
+        this.categoryData = result;
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   paymentEntryHandler() {
@@ -32,10 +41,11 @@ export class AddItemComponent implements OnInit {
     const payload = {
       data: this.date,
       name: this.name,
-      table: this.table
+      category: this.category,
+      price: this.price
     };
 
-    this.http.post(environment.url + 'additem', payload).subscribe(
+    this.http.post(environment.url + 'addmitem', payload).subscribe(
       result => {
         this.updatingBill = false;
         this.alertGenerateHandler('Bill Generated Successfully', 'success');
