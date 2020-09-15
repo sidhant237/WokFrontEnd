@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { OrderHazraComponent } from './order-hazra/order-hazra.component';
 import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
+import { CashTransferComponent } from './cash-transfer/cash-transfer.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
     AlertComponent,
     OrderItemComponent,
     OrderHazraComponent,
-    PaymentEntryComponent
+    PaymentEntryComponent,
+    CashTransferComponent
   ],
   imports: [
     BrowserModule,

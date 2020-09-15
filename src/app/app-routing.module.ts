@@ -7,6 +7,7 @@ import { OutletTransferComponent } from './outlet-transfer/outlet-transfer.compo
 import { OrderItemComponent } from './order-item/order-item.component';
 import { OrderHazraComponent } from './order-hazra/order-hazra.component';
 import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
+import { CashTransferComponent } from './cash-transfer/cash-transfer.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'hazra', component: OrderHazraComponent },
   { path: 'tolly', component: OrderItemComponent },
   { path: 'payment', component: PaymentEntryComponent },
+  { path: 'cash-transfer', component: CashTransferComponent },
 ];
 
 @NgModule({
