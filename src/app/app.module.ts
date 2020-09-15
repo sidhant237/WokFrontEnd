@@ -23,6 +23,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { OrderHazraComponent } from './order-hazra/order-hazra.component';
+import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { OrderHazraComponent } from './order-hazra/order-hazra.component';
     OutletTransferComponent,
     AlertComponent,
     OrderItemComponent,
-    OrderHazraComponent
+    OrderHazraComponent,
+    PaymentEntryComponent
   ],
   imports: [
     BrowserModule,
