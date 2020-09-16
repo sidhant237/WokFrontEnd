@@ -23,6 +23,8 @@ export class OrderHazraComponent implements OnInit {
   grossAmount: number;
   customDiscountIDCounter: number;
   showDiscountTab = false;
+  orderMethod: any;
+  payMethod: any;
 
   menuData: any;
   categories: any;
@@ -52,6 +54,7 @@ export class OrderHazraComponent implements OnInit {
     this.http.get(environment.url + 'hazraorder').subscribe(
       (result: StockData) => {
         this.menuData = result;
+        this.payMethod = this.menuData.PayMethod.filter(item => item.PayMethodName.toLowerCase() === 'cash')[0].PayMethodID;
         this.customDiscountIDCounter = this.menuData.discount.length;
         this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
         this.categorisedData = this.groupDataByCategory();
@@ -85,7 +88,9 @@ export class OrderHazraComponent implements OnInit {
             'qty': item.qty,
             'amount': item.amount,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1']
+            'order_number': this.menuData.OrderNo[0]['1'],
+            'order_method': this.orderMethod,
+            'pay_method': this.payMethod
           }
         );
       }
@@ -236,4 +241,6 @@ export interface StockData {
   outlet: any;
   discount: any;
   OrderNo: any;
+  OrderMethod: any;
+  PayMethod: any;
 }

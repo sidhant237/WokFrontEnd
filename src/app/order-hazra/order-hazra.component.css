@@ -230,10 +230,20 @@ select {
 }
 
 .order-submit {
-    padding: 10px 0px;
+    margin: 20px 0px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.order-submit .bottom-form{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+}
+.order-submit .bottom-form select {
+    width: 100%;
 }
 
 .model {
