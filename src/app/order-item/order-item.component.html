@@ -129,7 +129,20 @@
                 </div>
             </div>
             <div class="order-submit">
-                <button class="btn btn-success" (click)="itemOrderHandler()" [disabled]="totalAmount === 0">Order</button>
+                <div class="bottom-form">
+                    <label for="ordermethod">Order Method</label>
+                    <select id="ordermethod" class="form-control" [(ngModel)]="orderMethod">
+                        <option [value]="undefined">Select Order Method</option>
+                        <option *ngFor="let method of menuData.OrderMethod" [value]="method.OrderMethodID">{{ method.OrderMethodName }}</option>
+                    </select>
+                </div>
+                <div class="bottom-form">
+                    <label for="paymethod">Payment Method</label>
+                    <select id="paymethod" class="form-control" [(ngModel)]="payMethod">
+                        <option *ngFor="let method of menuData.PayMethod" [value]="method.PayMethodID">{{ method.PayMethodName }}</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" (click)="itemOrderHandler()" [disabled]="totalAmount === 0 || orderMethod === undefined">Order</button>
             </div>
         </div>
     </div>

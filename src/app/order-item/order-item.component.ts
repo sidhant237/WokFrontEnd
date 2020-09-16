@@ -23,6 +23,8 @@ export class OrderItemComponent implements OnInit {
   grossAmount: number;
   customDiscountIDCounter: number;
   showDiscountTab = false;
+  orderMethod: any;
+  payMethod: any;
 
   menuData: any;
   categories: any;
@@ -52,6 +54,7 @@ export class OrderItemComponent implements OnInit {
     this.http.get(environment.url + 'tollyorder').subscribe(
       (result: StockData) => {
         this.menuData = result;
+        this.payMethod = this.menuData.PayMethod.filter(item => item.PayMethodName.toLowerCase() === 'cash')[0].PayMethodID;
         this.customDiscountIDCounter = this.menuData.discount.length;
         this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
         this.categorisedData = this.groupDataByCategory();
@@ -98,7 +101,9 @@ export class OrderItemComponent implements OnInit {
             'qty': 0,
             'amount': item.value,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1']
+            'order_number': this.menuData.OrderNo[0]['1'],
+            'order_method': this.orderMethod,
+            'pay_method': this.payMethod
           }
         );
       }
