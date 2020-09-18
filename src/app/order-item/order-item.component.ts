@@ -130,6 +130,7 @@ export class OrderItemComponent implements OnInit {
       result => {
         this.updatingBill = false;
         this.alertGenerateHandler('Order Successfull', 'success');
+        this.getItemList();
       }, error => {
         this.updatingBill = false;
         console.log(error);
