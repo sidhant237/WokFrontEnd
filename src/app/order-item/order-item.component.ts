@@ -51,10 +51,20 @@ export class OrderItemComponent implements OnInit {
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
     this.totalAmount = 0;
-    this.http.get(environment.url + 'tollyorder').subscribe(
+    this.getItemList();
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+  }
+
+  getItemList() {
+    this.orderData = [];
+    this.http.get(environment.url + 'hazraorder').subscribe(
       (result: StockData) => {
         this.menuData = result;
-        this.payMethod = this.menuData.PayMethod.filter(item => item.PayMethodName.toLowerCase() === 'cash')[0].PayMethodID;
+        this.payMethod = this.menuData.PayMethod.filter(item => item.PayMethodName.toLowerCase() === 'online')[0].PayMethodID;
         this.customDiscountIDCounter = this.menuData.discount.length;
         this.categories = [...new Set(this.menuData.menu.map(item => item.catname))];
         this.categorisedData = this.groupDataByCategory();
@@ -62,13 +72,8 @@ export class OrderItemComponent implements OnInit {
         console.log(error);
       }
     );
-
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
   }
+
 
   _filter(value: string): any[] {
     const filterValue = value.toLowerCase();
@@ -79,6 +84,10 @@ export class OrderItemComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
+    if (this.payMethod === 2) {
+      billStatement['date'] = this.date;
+      billStatement['order_method'] = this.orderData;
+    }
     billStatement['items'] = [];
     this.orderData.forEach(
       item => {

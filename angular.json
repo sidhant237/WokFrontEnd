@@ -29,7 +29,9 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/app/shared/printer-interface/cxmlp-label-api.js"
+            ]
           },
           "configurations": {
             "production": {
