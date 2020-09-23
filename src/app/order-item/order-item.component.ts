@@ -85,7 +85,7 @@ export class OrderItemComponent implements OnInit {
     this.updatingBill = true;
     const billStatement = {};
     billStatement['date'] = this.date;
-    billStatement['order_method'] = this.orderData;
+    billStatement['order_method'] = this.orderMethod;
     billStatement['paymethod_method'] = this.payMethod;
     billStatement['amount'] = this.totalAmount;
     billStatement['items'] = [];
