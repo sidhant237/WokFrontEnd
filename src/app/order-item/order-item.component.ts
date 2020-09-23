@@ -61,7 +61,7 @@ export class OrderItemComponent implements OnInit {
 
   getItemList() {
     this.orderData = [];
-    this.http.get(environment.url + 'hazraorder').subscribe(
+    this.http.get(environment.url + 'tollyorder').subscribe(
       (result: StockData) => {
         this.menuData = result;
         this.payMethod = this.menuData.PayMethod.filter(item => item.PayMethodName.toLowerCase() === 'online')[0].PayMethodID;
