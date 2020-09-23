@@ -111,7 +111,9 @@ export class OrderHazraComponent implements OnInit {
             'qty': 0,
             'amount': item.value,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1']
+            'order_number': this.menuData.OrderNo[0]['1'],
+            'order_method': this.orderMethod,
+            'pay_method': this.payMethod
           }
         );
       }
@@ -122,7 +124,9 @@ export class OrderHazraComponent implements OnInit {
         'qty': 0,
         'amount': this.gstAmount,
         'date': this.date,
-        'order_number': this.menuData.OrderNo[0]['1']
+        'order_number': this.menuData.OrderNo[0]['1'],
+        'order_method': this.orderMethod,
+        'pay_method': this.payMethod
       }
     );
     this.http.post(environment.url + 'hazraorder', billStatement).subscribe(

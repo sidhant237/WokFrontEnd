@@ -112,7 +112,9 @@ export class OrderItemComponent implements OnInit {
             'qty': 0,
             'amount': item.value,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1']
+            'order_number': this.menuData.OrderNo[0]['1'],
+            'pay_method': this.payMethod,
+            'order_method': this.orderData
           }
         );
       }
@@ -123,7 +125,9 @@ export class OrderItemComponent implements OnInit {
         'qty': 0,
         'amount': this.gstAmount,
         'date': this.date,
-        'order_number': this.menuData.OrderNo[0]['1']
+        'order_number': this.menuData.OrderNo[0]['1'],
+        'pay_method': this.payMethod,
+        'order_method': this.orderData
       }
     );
     this.http.post(environment.url + 'tollyorder', billStatement).subscribe(
