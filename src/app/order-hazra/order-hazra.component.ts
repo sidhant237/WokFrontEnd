@@ -83,10 +83,10 @@ export class OrderHazraComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
-    if (this.payMethod === 2) {
-      billStatement['date'] = this.date;
-      billStatement['order_method'] = this.orderData;
-    }
+    billStatement['date'] = this.date;
+    billStatement['order_method'] = this.orderData;
+    billStatement['paymethod_method'] = this.payMethod;
+    billStatement['amount'] = this.totalAmount;
     billStatement['items'] = [];
     this.orderData.forEach(
       item => {

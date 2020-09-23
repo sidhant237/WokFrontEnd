@@ -84,10 +84,10 @@ export class OrderItemComponent implements OnInit {
   itemOrderHandler() {
     this.updatingBill = true;
     const billStatement = {};
-    if (this.payMethod === 2) {
-      billStatement['date'] = this.date;
-      billStatement['order_method'] = this.orderData;
-    }
+    billStatement['date'] = this.date;
+    billStatement['order_method'] = this.orderData;
+    billStatement['paymethod_method'] = this.payMethod;
+    billStatement['amount'] = this.totalAmount;
     billStatement['items'] = [];
     this.orderData.forEach(
       item => {
@@ -97,7 +97,9 @@ export class OrderItemComponent implements OnInit {
             'qty': item.qty,
             'amount': item.amount,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1']
+            'order_number': this.menuData.OrderNo[0]['1'],
+            'pay_method': this.payMethod,
+            'order_method': this.orderData
           }
         );
       }
@@ -110,9 +112,7 @@ export class OrderItemComponent implements OnInit {
             'qty': 0,
             'amount': item.value,
             'date': this.date,
-            'order_number': this.menuData.OrderNo[0]['1'],
-            'order_method': this.orderMethod,
-            'pay_method': this.payMethod
+            'order_number': this.menuData.OrderNo[0]['1']
           }
         );
       }
