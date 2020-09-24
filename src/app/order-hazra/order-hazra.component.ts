@@ -82,8 +82,11 @@ export class OrderHazraComponent implements OnInit {
 
   itemOrderHandler() {
     this.updatingBill = true;
+    const time = new Date();
     const billStatement = {};
-    billStatement['date'] = this.date + ' ' + new Date().toLocaleTimeString();
+    billStatement['date'] = [
+                              this.date, ' ', time.getHours(), ':', time.getMinutes(), ':', time.getSeconds()
+                            ].join('');
     billStatement['order_method'] = this.orderMethod;
     billStatement['paymethod_method'] = this.payMethod;
     billStatement['amount'] = this.totalAmount;
