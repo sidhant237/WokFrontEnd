@@ -98,7 +98,7 @@ export class OrderHazraComponent implements OnInit {
             'item': item.itemid,
             'qty': item.qty,
             'amount': item.amount,
-            'date': this.date,
+            'date': [this.date, ' ', time.getHours(), ':', time.getMinutes(), ':', time.getSeconds()].join(''),
             'order_number': this.menuData.OrderNo[0]['1'],
             'order_method': this.orderMethod,
             'pay_method': this.payMethod
@@ -113,7 +113,7 @@ export class OrderHazraComponent implements OnInit {
             'item': item.discountid,
             'qty': 0,
             'amount': item.value,
-            'date': this.date,
+            'date': [this.date, ' ', time.getHours(), ':', time.getMinutes(), ':', time.getSeconds()].join(''),
             'order_number': this.menuData.OrderNo[0]['1'],
             'order_method': this.orderMethod,
             'pay_method': this.payMethod
@@ -126,7 +126,7 @@ export class OrderHazraComponent implements OnInit {
         'item': this.categorisedData.GST[0].itemid,
         'qty': 0,
         'amount': this.gstAmount,
-        'date': this.date,
+        'date': [this.date, ' ', time.getHours(), ':', time.getMinutes(), ':', time.getSeconds()].join(''),
         'order_number': this.menuData.OrderNo[0]['1'],
         'order_method': this.orderMethod,
         'pay_method': this.payMethod
